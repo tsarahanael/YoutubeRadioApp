@@ -27,6 +27,13 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+  mainWindow.on('resize', () => {
+    setTimeout(() => {
+      const size = mainWindow.getSize()
+      mainWindow.setSize(size[0], Math.round((size[0] * 16) / 9))
+    }, 0)
+  })
+
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
@@ -38,22 +45,6 @@ function createWindow(): void {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-  }
-
-  if (
-    /^(27|28)\.\d+\.\d+(\-alpha\.\d+|\-beta\.\d+)?$/.test(process.versions.electron) &&
-    process.platform === 'win32'
-  ) {
-    mainWindow.on('blur', () => {
-      const [width_39959, height_39959] = mainWindow.getSize()
-      mainWindow.setSize(width_39959, height_39959 + 1)
-      mainWindow.setSize(width_39959, height_39959)
-    })
-    mainWindow.on('focus', () => {
-      const [width_39959, height_39959] = mainWindow.getSize()
-      mainWindow.setSize(width_39959, height_39959 + 1)
-      mainWindow.setSize(width_39959, height_39959)
-    })
   }
 
   const toggleOverlayHotKey = 'CommandOrControl+Shift+O'

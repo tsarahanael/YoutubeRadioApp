@@ -9,8 +9,6 @@ const MusicPlayer: React.FC = () => {
   }
 
   const opts = {
-    height: '160',
-    width: '280',
     playerVars: {
       autoplay: 1, // Auto-play the video on load
       controls: 0, // Hide controls
@@ -24,8 +22,8 @@ const MusicPlayer: React.FC = () => {
   return (
     <div className="bg-transparent h-full w-full flex flex-col justify-center, align-center">
       <SearchBar onSearch={updatePlayer} />
-      <div className=" p-2 flex justify-center items-center h-full bg-cyan-800 rounded-xl">
-        <YouTube videoId={radioUrl} opts={opts} />
+      <div className=" p-3 flex justify-center items-center bg-cyan-800 rounded-xl">
+        <YouTube videoId={radioUrl} opts={opts} className="youtubeContainer" />
       </div>
     </div>
   )
