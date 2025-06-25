@@ -8,9 +8,11 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 350,
     height: 300,
-    //autoHideMenuBar: true,
+    autoHideMenuBar: true,
+    skipTaskbar: true,
     transparent: true,
     frame: false,
+    titleBarStyle: 'hidden',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -18,7 +20,9 @@ function createWindow(): void {
     }
   })
 
-  mainWindow.setAlwaysOnTop(true, 'floating')
+  setInterval(() => {
+    mainWindow.setAlwaysOnTop(true, 'pop-up-menu')
+  }, 1000)
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -34,6 +38,22 @@ function createWindow(): void {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+  }
+
+  if (
+    /^(27|28)\.\d+\.\d+(\-alpha\.\d+|\-beta\.\d+)?$/.test(process.versions.electron) &&
+    process.platform === 'win32'
+  ) {
+    mainWindow.on('blur', () => {
+      const [width_39959, height_39959] = mainWindow.getSize()
+      mainWindow.setSize(width_39959, height_39959 + 1)
+      mainWindow.setSize(width_39959, height_39959)
+    })
+    mainWindow.on('focus', () => {
+      const [width_39959, height_39959] = mainWindow.getSize()
+      mainWindow.setSize(width_39959, height_39959 + 1)
+      mainWindow.setSize(width_39959, height_39959)
+    })
   }
 
   const toggleOverlayHotKey = 'CommandOrControl+Shift+O'
