@@ -27,12 +27,7 @@ function createWindow(): void {
     mainWindow.show()
   })
 
-  mainWindow.on('resize', () => {
-    setTimeout(() => {
-      const size = mainWindow.getSize()
-      mainWindow.setSize(size[0], Math.round((size[0] * 16) / 9))
-    }, 0)
-  })
+  mainWindow.setAspectRatio(1)
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
