@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import YouTube from 'react-youtube'
 import SearchBar from './RadioSearchBar'
-import { Console } from 'console'
 
 type MusicPlayerProps = {
   initialVideoId?: string,

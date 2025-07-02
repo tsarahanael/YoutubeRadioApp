@@ -1,6 +1,6 @@
 {
-  "name": "YoutubeRadio",
-  "version": "1.0.0",
+  "name": "youtuberadio",
+  "version": "1.0.1",
   "description": "A simple Overlay for Youtube videos",
   "main": "./out/main/index.js",
   "author": "Sarah Tsangou <",
