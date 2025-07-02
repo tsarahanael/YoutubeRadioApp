@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { Console } from 'console'
 
 function createWindow(): void {
   // Create the browser window.
@@ -27,6 +28,8 @@ function createWindow(): void {
   }, 1000)
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    console.log(app.getPath('userData'))
+    
   })
 
   mainWindow.setAspectRatio(1)

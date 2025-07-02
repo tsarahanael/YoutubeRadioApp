@@ -15,6 +15,7 @@ const MusicPlayer: React.FC = () => {
     const id = youtube_parser(link)
     if (!id) {
       console.error('Invalid YouTube link')
+      alert('Invalid YouTube link. Please try again.')
     } else {
       setRadioId(id)
     }
