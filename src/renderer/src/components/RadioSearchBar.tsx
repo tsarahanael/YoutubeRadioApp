@@ -13,6 +13,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     e.preventDefault()
     const id = query.split('v=')[1]?.split('&')[0] || query
     onSearch(id)
+    setQuery('')
   }
 
   return (
