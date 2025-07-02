@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { Console } from 'console'
+import fs from 'fs'
 
 function createWindow(): void {
   // Create the browser window.
@@ -29,7 +29,6 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     console.log(app.getPath('userData'))
-    
   })
 
   mainWindow.setAspectRatio(1)
@@ -86,6 +85,23 @@ app.whenReady().then(() => {
     if (currentWindow) {
       currentWindow.minimize()
     }
+  })
+
+  const configPath = join(app.getPath('userData'), 'config.json')
+
+  ipcMain.handle('config:load', async () => {
+    console.log(`Loading config from ${configPath}`)
+    if (!fs.existsSync(configPath)) {
+      console.log('Config file does not exist, returning empty config.')
+      return {}
+    }
+    const config = fs.readFileSync(configPath, 'utf-8')
+    return JSON.parse(config)
+  })
+
+  ipcMain.handle('config:save', async (_e, data) => {
+    console.log(`Saving config to ${configPath}`)
+    fs.writeFileSync(configPath, JSON.stringify(data, null, 2))
   })
 
   createWindow()

@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 import YouTube from 'react-youtube'
 import SearchBar from './RadioSearchBar'
+import { Console } from 'console'
 
-const MusicPlayer: React.FC = () => {
-  const [radioId, setRadioId] = useState('jfKfPfyJRdk')
+type MusicPlayerProps = {
+  initialVideoId?: string,
+  onVideoChange?: (videoId: string) => void
+}
+
+const MusicPlayer: React.FC<MusicPlayerProps> = (props) => {
+  const [radioId, setRadioId] = useState(props.initialVideoId)
+
+  console.log('MusicPlayer initialized with props:', JSON.stringify(props))
 
   function youtube_parser(url: string): string | false {
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
@@ -18,6 +26,7 @@ const MusicPlayer: React.FC = () => {
       alert('Invalid YouTube link. Please try again.')
     } else {
       setRadioId(id)
+      props.onVideoChange?.(id)
     }
   }
 
