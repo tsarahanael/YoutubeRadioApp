@@ -20,6 +20,8 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.setAlwaysOnTop(true, 'modal-panel')
+
   setInterval(() => {
     mainWindow.setAlwaysOnTop(true, 'pop-up-menu')
   }, 1000)
@@ -46,7 +48,6 @@ function createWindow(): void {
   let isOverlay = false
   globalShortcut.register(toggleOverlayHotKey, () => {
     isOverlay = !isOverlay
-    mainWindow.setAlwaysOnTop(isOverlay, 'modal-panel')
     mainWindow.setIgnoreMouseEvents(isOverlay)
 
     mainWindow.webContents.send('toggle-overlay', isOverlay)
