@@ -9,9 +9,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('')
 
   const onSubmit = (e: React.FormEvent): void => {
+    console.log('SearchBar onSubmit called with query:', query)
     e.preventDefault()
-    const id = query.split('v=')[1]?.split('&')[0] || query
-    onSearch(id)
+    onSearch(query)
     setQuery('')
   }
 
